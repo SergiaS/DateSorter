@@ -1,6 +1,5 @@
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Marking will be based upon producing a readable, well engineered solution rather than factors
@@ -28,6 +27,27 @@ public class DateSorter {
      * @return the collection of dates now sorted as per the spec
      */
     public Collection<LocalDate> sortDates(List<LocalDate> unsortedDates) {
-        // your solution here
+        Collections.sort(unsortedDates);
+
+        List<LocalDate> head = new ArrayList<>(); // months with 'r' - ascending sort
+        List<LocalDate> tail = new ArrayList<>(); // months without 'r' - descending sort
+
+        for (LocalDate date : unsortedDates) {
+            if (rMonths.contains(date.getMonth().toString())) {
+                head.add(date);
+            } else {
+                tail.add(date);
+            }
+        }
+
+        Collections.reverse(tail);
+
+        head.addAll(tail);
+
+        return head;
     }
+
+    private final static Set<String> rMonths =
+            Set.of("JANUARY", "FEBRUARY", "MARCH", "APRIL", "SEPTEMBER", " OCTOBER", "NOVEMBER", "DECEMBER");
+
 }
